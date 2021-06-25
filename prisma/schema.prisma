@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  name     String?
+  meetings Meeting[] @relation("meeting_guests")
+  ownerOf  Meeting[]
+}
+
+model Meeting {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  title        String
+  introduction String
+  status       String
+  state        String
+  startTime    DateTime
+  endTime      DateTime
+  guests       User[]   @relation("meeting_guests", fields: [id], references: [id])
+  owner        User     @relation(fields: [ownerId], references: [id])
+  ownerId      Int
+}
