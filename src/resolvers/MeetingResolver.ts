@@ -39,6 +39,12 @@ export class MeetingUpdateInput extends MeetingCreateInput {
   id: number
 }
 
+@InputType()
+export class MeetingDeleteInput {
+  @Field((type) => ID)
+  id: number
+}
+
 @Resolver(Meeting)
 export class MeetingResolver {
 
@@ -97,6 +103,18 @@ export class MeetingResolver {
         state: input.state,
         startTime: new Date(input.startTime),
         endTime: new Date(input.endTime),
+      },
+    })
+  }
+
+  @Mutation((returns) => Meeting, { nullable: true })
+  async deleteMeeting(
+    @Arg('input') input: MeetingDeleteInput,
+    @Ctx() ctx: Context,
+  ) {
+    return ctx.prisma.meeting.delete({
+      where: {
+        id: Number(input.id)
       },
     })
   }
