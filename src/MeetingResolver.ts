@@ -29,11 +29,11 @@ export class MeetingCreateInput {
   @Field()
   state: string
 
-  @Field((type) => Date)
-  startTime: Date
+  @Field()
+  startTime: string
 
-  @Field((type) => Date)
-  endTime: Date
+  @Field()
+  endTime: string
 }
 
 @Resolver(Meeting)
@@ -41,20 +41,27 @@ export class MeetingResolver {
 
   @Mutation((returns) => Meeting)
   async createMeeting(
-    @Arg('data') data: MeetingCreateInput,
+    @Arg('input') input: MeetingCreateInput,
 
     @Ctx() ctx: Context,
   ) {
     return ctx.prisma.meeting.create({
       data: {
-        title: data.title,
-        introduction: data.introduction,
-        status: data.status,
-        state: data.state,
-        startTime: data.startTime,
-        endTime: data.endTime,
-        ownerId: 123
+        title: input.title,
+        introduction: input.introduction,
+        status: input.status,
+        state: input.state,
+        startTime: new Date(input.startTime),
+        endTime: new Date(input.endTime),
+        ownerId: 1
       },
+    })
+  }
+
+  @Query((returns) => Meeting, { nullable: true })
+  async meeting(@Arg('id') id: number, @Ctx() ctx: Context) {
+    return ctx.prisma.meeting.findUnique({
+      where: { id },
     })
   }
 }

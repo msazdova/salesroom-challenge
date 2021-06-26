@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import * as tq from 'type-graphql'
-import { MeetingCreateInput, MeetingResolver } from './MeetingResolver'
+import { MeetingResolver } from './MeetingResolver'
 import { ApolloServer } from 'apollo-server'
 import { DateTimeResolver } from 'graphql-scalars'
 import { context } from './context'
@@ -10,7 +10,7 @@ import { GraphQLScalarType } from 'graphql'
 const app = async () => {
 
   const schema = await tq.buildSchema({
-    resolvers: [MeetingResolver, MeetingCreateInput],
+    resolvers: [MeetingResolver],
     scalarsMap: [{ type: GraphQLScalarType, scalar: DateTimeResolver }]
   })
 
