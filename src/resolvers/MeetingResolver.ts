@@ -5,9 +5,7 @@ import {
   Mutation,
   Arg,
   Ctx,
-  FieldResolver,
-  Root,
-  Int,
+  ID,
   InputType,
   Field,
 } from 'type-graphql'
@@ -41,7 +39,6 @@ export class MeetingResolver {
   @Mutation((returns) => Meeting)
   async createMeeting(
     @Arg('input') input: MeetingCreateInput,
-
     @Ctx() ctx: Context,
   ) {
     return ctx.prisma.meeting.create({
@@ -62,9 +59,12 @@ export class MeetingResolver {
   }
 
   @Query((returns) => Meeting, { nullable: true })
-  async meeting(@Arg('id') id: number, @Ctx() ctx: Context) {
+  async meeting(
+      @Arg('meetingId', (type) => ID) meetingId: number,
+      @Ctx() ctx: Context
+  ) {
     return ctx.prisma.meeting.findUnique({
-      where: { id },
+      where: { id: Number(meetingId) },
     })
   }
 }
