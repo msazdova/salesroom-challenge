@@ -67,4 +67,11 @@ export class MeetingResolver {
       where: { id: Number(meetingId) },
     })
   }
+
+  @Query((returns) => [Meeting])
+  async listMeetings(
+    @Ctx() ctx: Context) {
+
+    return ctx.prisma.meeting.findMany({})
+  }
 }
