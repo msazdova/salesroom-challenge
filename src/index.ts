@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import * as tq from 'type-graphql'
-import { MeetingResolver } from './MeetingResolver'
+import { MeetingResolver } from './resolvers/MeetingResolver'
 import { ApolloServer } from 'apollo-server'
 import { DateTimeResolver } from 'graphql-scalars'
 import { context } from './context'

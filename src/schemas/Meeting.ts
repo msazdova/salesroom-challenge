@@ -31,9 +31,6 @@ export class Meeting {
   @Field((type) => Date)
   endTime: Date
 
-  @Field((type) => [User], { nullable: true })
-  guests?: [User] | null
-
   @Field((type) => User, { nullable: true })
   owner: User | null
 

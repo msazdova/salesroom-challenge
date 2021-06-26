@@ -8,11 +8,11 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  email    String    @unique
-  name     String?
-  meetings Meeting[] @relation("meeting_guests")
-  ownerOf  Meeting[]
+  id           Int            @id @default(autoincrement())
+  email        String         @unique
+  name         String?
+  meetings     Meeting[]
+  meetingGuest MeetingGuest[]
 }
 
 model Meeting {
@@ -25,7 +25,16 @@ model Meeting {
   state        String
   startTime    DateTime
   endTime      DateTime
-  guests       User[]   @relation("meeting_guests", fields: [id], references: [id])
   owner        User     @relation(fields: [ownerId], references: [id])
   ownerId      Int
+  meetingGuest MeetingGuest[]
+}
+
+model MeetingGuest {
+  meetingId Int
+  userId    Int
+  meeting   Meeting @relation(fields: [meetingId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
+
+  @@id([meetingId, userId])
 }

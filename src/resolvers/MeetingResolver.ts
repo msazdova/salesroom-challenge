@@ -11,9 +11,8 @@ import {
   InputType,
   Field,
 } from 'type-graphql'
-import { Meeting } from './Meeting'
-import { User } from './User'
-import { Context } from './context'
+import { Meeting } from '../schemas/Meeting'
+import { Context } from '../context'
 
 @InputType()
 export class MeetingCreateInput {
@@ -53,7 +52,11 @@ export class MeetingResolver {
         state: input.state,
         startTime: new Date(input.startTime),
         endTime: new Date(input.endTime),
-        ownerId: 1
+        owner: {
+          connect: {
+            id: 1 // TODO
+          }
+        }
       },
     })
   }

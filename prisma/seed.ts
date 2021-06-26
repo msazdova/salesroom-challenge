@@ -9,7 +9,7 @@ const userData: Prisma.UserCreateInput[] = [
   },
   {
     name: 'Bob',
-    email: 'nilu@prisma.io',
+    email: 'bob@prisma.io',
   },
   {
     name: 'Meggie',
