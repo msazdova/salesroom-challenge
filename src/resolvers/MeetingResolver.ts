@@ -33,6 +33,12 @@ export class MeetingCreateInput {
   endTime: string
 }
 
+@InputType()
+export class MeetingUpdateInput extends MeetingCreateInput {
+  @Field((type) => ID)
+  id: number
+}
+
 @Resolver(Meeting)
 export class MeetingResolver {
 
@@ -73,5 +79,25 @@ export class MeetingResolver {
     @Ctx() ctx: Context) {
 
     return ctx.prisma.meeting.findMany({})
+  }
+
+  @Mutation((returns) => Meeting)
+  async updateMeeting(
+    @Arg('input') input: MeetingUpdateInput,
+    @Ctx() ctx: Context,
+  ) {
+    return ctx.prisma.meeting.update({
+      where: {
+        id: Number(input.id)
+      },
+      data: {
+        title: input.title,
+        introduction: input.introduction,
+        status: input.status,
+        state: input.state,
+        startTime: new Date(input.startTime),
+        endTime: new Date(input.endTime),
+      },
+    })
   }
 }
