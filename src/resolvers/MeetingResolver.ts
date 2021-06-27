@@ -46,7 +46,7 @@ export class MeetingDeleteInput {
 }
 
 @InputType()
-export class AddMeetingGuestInput {
+export class MeetingGuestInput {
   @Field((type) => ID)
   meetingId: number
 
@@ -127,9 +127,11 @@ export class MeetingResolver {
     })
   }
 
+  // Manage guests API
+
   @Mutation((returns) => Meeting)
   async addMeetingGuests(
-    @Arg('input') input: AddMeetingGuestInput,
+    @Arg('input') input: MeetingGuestInput,
     @Ctx() ctx: Context,
   ) {
 
@@ -140,6 +142,27 @@ export class MeetingResolver {
       data: {
         guests: {
           connect: input.userIds.map(userId => { return { id: Number(userId) } })
+        }
+      },
+      include: {
+        guests: true
+      }
+    })
+  }
+
+  @Mutation((returns) => Meeting)
+  async removeMeetingGuests(
+    @Arg('input') input: MeetingGuestInput,
+    @Ctx() ctx: Context,
+  ) {
+
+    return ctx.prisma.meeting.update({
+      where: {
+        id: Number(input.meetingId),
+      },
+      data: {
+        guests: {
+          disconnect: input.userIds.map(userId => { return { id: Number(userId) } })
         }
       },
       include: {
