@@ -17,4 +17,7 @@ export class User {
 
   @Field((type) => [Meeting], { nullable: true })
   meetings?: [Meeting] | null
+
+  @Field((type) => [Meeting], { nullable: true })
+  meetingGuest?: [Meeting] | null
 }

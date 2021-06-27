@@ -37,4 +37,7 @@ export class Meeting {
   @Field((type) => Int)
   ownerId: number
 
+  @Field((type) => [User], { nullable: true })
+  guests?: User[] | null
+
 }

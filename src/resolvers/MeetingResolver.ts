@@ -45,6 +45,15 @@ export class MeetingDeleteInput {
   id: number
 }
 
+@InputType()
+export class AddMeetingGuestInput {
+  @Field((type) => ID)
+  meetingId: number
+
+  @Field((type) => [ID])
+  userIds: number[]
+}
+
 @Resolver(Meeting)
 export class MeetingResolver {
 
@@ -83,7 +92,6 @@ export class MeetingResolver {
   @Query((returns) => [Meeting])
   async listMeetings(
     @Ctx() ctx: Context) {
-
     return ctx.prisma.meeting.findMany({})
   }
 
@@ -116,6 +124,27 @@ export class MeetingResolver {
       where: {
         id: Number(input.id)
       },
+    })
+  }
+
+  @Mutation((returns) => Meeting)
+  async addMeetingGuests(
+    @Arg('input') input: AddMeetingGuestInput,
+    @Ctx() ctx: Context,
+  ) {
+
+    return ctx.prisma.meeting.update({
+      where: {
+        id: Number(input.meetingId),
+      },
+      data: {
+        guests: {
+          connect: input.userIds.map(userId => { return { id: Number(userId) } })
+        }
+      },
+      include: {
+        guests: true
+      }
     })
   }
 }
