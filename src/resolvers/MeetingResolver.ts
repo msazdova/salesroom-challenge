@@ -70,9 +70,23 @@ export class MeetingResolver {
         state: input.state,
         startTime: new Date(input.startTime),
         endTime: new Date(input.endTime),
+       /**
+        * FIXME: For the purpose of the task,
+        * hardcode owner id as there is no sign up and auth flow set up,
+        * to read the user from the current session/context.
+        * */ 
         owner: {
           connect: {
-            id: 1 // TODO
+            id: 1
+          }
+        },
+        /**
+         * Add the owner initially as a guest as well.
+         * FIXME: As mentioned above, hardcode the value for the same reasons.
+         */
+        guests: {
+          connect: {
+            id: 1
           }
         }
       },
