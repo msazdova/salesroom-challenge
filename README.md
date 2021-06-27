@@ -63,3 +63,24 @@ npm run start-dev
 ```
 
 Server is ready at [http://localhost:4000](http://localhost:4000). 🚀
+
+
+### 4. Testing
+
+Get the Postman collection and run the API against your running server.
+
+[Postman Collection](https://www.postman.com/collections/afb06337a6de49a4eb7d)
+
+** 🤓 Fix: In order for AddMeetingGuests and RemoveMeetingGuests to work
+
+```
+mutation AddMeetingGuests($meetingId: ID!, $userIds: [ID!]) {
+```
+
+and
+
+```
+mutation RemoveMeetingGuests($meetingId: ID!, $userIds: [ID!]) {
+```
+
+have to be changed to send `$userIds: [ID!]!`
