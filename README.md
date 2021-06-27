@@ -5,8 +5,8 @@ GraphQL API to keep track of meetings and their guests in a video chat applicati
 
 ## Prerequisities
 
-- [Node](https://nodejs.org/en/) 14.15.4 installed on your machine
-- [TypeScript](https://www.typescriptlang.org) 4.3.4 installed on your machine
+- [Node](https://nodejs.org/en/) 14.15.4 installed
+- [TypeScript](https://www.typescriptlang.org) 4.3.4 installed
 - [MySQL](https://www.mysql.com/) database server running
 
 ### Built with
@@ -42,7 +42,7 @@ Next, run the following command to create your PostgreSQL database file. This al
 npx prisma migrate dev --name init
 ```
 
-Finally, seed the database with the sample data in `prisma/seed.ts`.
+Finally, seed the database with the sample data in `prisma/seed.ts`. This creates a few initial users for testing.
 
 ```
 npx prisma db seed --preview-feature
@@ -53,7 +53,13 @@ npx prisma db seed --preview-feature
 Launch your GraphQL server with this command:
 
 ```
-npm run dev
+npm run start
+```
+
+or run the server with ts-node-dev in development mode:
+
+```
+npm run start-dev
 ```
 
 Server is ready at [http://localhost:4000](http://localhost:4000). 🚀
